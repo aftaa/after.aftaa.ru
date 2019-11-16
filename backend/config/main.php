@@ -7,6 +7,7 @@ $params = array_merge(
 );
 
 return [
+    'name' => 'aftaa.ru backend',
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
