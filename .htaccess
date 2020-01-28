@@ -1,3 +1,4 @@
 RewriteEngine on
-RewriteCond %{REQUEST_URI} !/backend/
-RewriteRule ^(.*)$ /backend/web/$1 [L,QSA]
+RewriteCond %{HTTP_HOST} ^after.aftaa.ru$ [NC]
+RewriteCond %{REQUEST_URI} !backend/web/
+RewriteRule (.*) /backend/web/$1 [L,QSA]
