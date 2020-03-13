@@ -10,8 +10,8 @@ use yii\widgets\ActiveForm;
 
 $linkBlocks = LinkBlock::find()->select(['name', 'id'])->indexBy('id')->column();
 $private = [
-    false => Yii::t('app', 'Yes'),
-    true  => Yii::t('app','No'),
+    true => Yii::t('app', 'Yes'),
+    false  => Yii::t('app','No'),
 ];
 ?>
 

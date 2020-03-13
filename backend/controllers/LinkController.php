@@ -21,7 +21,7 @@ class LinkController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -39,7 +39,7 @@ class LinkController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -67,8 +67,11 @@ class LinkController extends Controller
         $model = new Link();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->getRemoteFavicon($model);
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+
 
         return $this->render('create', [
             'model' => $model,
@@ -86,6 +89,8 @@ class LinkController extends Controller
     {
         $model = $this->findModel($id);
 
+        $this->getRemoteFavicon($model);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -101,6 +106,8 @@ class LinkController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -123,5 +130,18 @@ class LinkController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    /**
+     * @param Link $model
+     */
+    protected function getRemoteFavicon(Link $model)
+    {
+        if (preg_match('/^http/', $model->icon)) {
+            $icon = basename($model->icon);
+            $icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
+            file_put_contents("../../../favicons/$icon", file_get_contents($model->icon));
+            $model->icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
+        }
     }
 }

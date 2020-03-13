@@ -36,7 +36,7 @@ class Link extends \yii\db\ActiveRecord
             [['link_block_id', 'private'], 'integer'],
             [['name', 'href', 'icon'], 'required'],
             [['name'], 'string', 'max' => 50],
-            [['href'], 'string', 'max' => 150],
+            [['href'], 'string', 'max' => 500],
             [['icon'], 'string', 'max' => 100],
             [['link_block_id'], 'exist', 'skipOnError' => true, 'targetClass' => LinkBlock::className(), 'targetAttribute' => ['link_block_id' => 'id']],
         ];
