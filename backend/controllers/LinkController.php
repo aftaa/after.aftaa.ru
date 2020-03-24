@@ -53,7 +53,7 @@ class LinkController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $this->getRemoteFavicon($model);
+//        $this->getRemoteFavicon($model);
 
         return $this->render('view', [
             'model' => $model,
