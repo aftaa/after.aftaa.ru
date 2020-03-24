@@ -72,7 +72,6 @@ class LinkController extends Controller
         }
 
 
-
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -137,11 +136,9 @@ class LinkController extends Controller
      */
     protected function getRemoteFavicon(Link $model)
     {
-        if (preg_match('/^http/', $model->icon)) {
-            $icon = basename($model->icon);
-            $icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
-            file_put_contents("../../../favicons/$icon", file_get_contents($model->icon));
-            $model->icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
-        }
+        $icon = basename($model->icon);
+        $icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
+        file_put_contents("../../../favicons/$icon", file_get_contents($model->icon));
+        $model->icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
     }
 }
