@@ -52,8 +52,11 @@ class LinkController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $this->getRemoteFavicon($model);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -87,8 +90,6 @@ class LinkController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        $this->getRemoteFavicon($model);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
