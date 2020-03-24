@@ -53,7 +53,7 @@ class LinkController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-//        $this->getRemoteFavicon($model);
+        $this->getRemoteFavicon($model);
 
         return $this->render('view', [
             'model' => $model,
@@ -137,6 +137,8 @@ class LinkController extends Controller
      */
     protected function getRemoteFavicon(Link $model)
     {
+        return;
+
         $icon = basename($model->icon);
         $icon = $model->name . '.' . pathinfo($icon, PATHINFO_EXTENSION);
         file_put_contents("../../../favicons/$icon", file_get_contents($model->icon));
